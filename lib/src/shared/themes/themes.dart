@@ -15,8 +15,9 @@ ThemeData get lightTheme => ThemeData(
       useMaterial3: true,
       colorScheme: _lightColorScheme,
       appBarTheme: AppBarTheme(
-          centerTitle: true,
-          backgroundColor: _lightColorScheme.primaryContainer),
+        centerTitle: true,
+        backgroundColor: _lightColorScheme.primaryContainer,
+      ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: _lightColorScheme.primary,
         foregroundColor: Colors.white,

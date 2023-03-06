@@ -6,6 +6,12 @@ class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return NavigationDrawer(
+      onDestinationSelected: (value) {
+        if (value == 1) {
+          Navigator.of(context).pop();
+          Navigator.of(context).pushNamed('/config');
+        }
+      },
       children: [
         Padding(
           padding: EdgeInsets.only(top: 28, right: 16, left: 16, bottom: 16),
