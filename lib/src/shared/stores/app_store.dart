@@ -7,14 +7,21 @@ class AppStore {
 
   final ConfigurationService _configurationService;
 
-  AppStore(this._configurationService);
+  AppStore(this._configurationService) {
+    init();
+  }
 
   void init() {
-    //TODO: salvar na base local;
+    final model = _configurationService.getconfiguration();
+    syncDate.value = model.syncDate;
+    themeMode.value = _getThemeModeByName(model.themeModeName);
   }
 
   void save() {
-    //TODO: salvar na base local;
+    _configurationService.saveConfiguration(
+      themeMode.value.name,
+      syncDate.value,
+    );
   }
 
   void changeThemeMode(ThemeMode? mode) {
@@ -26,5 +33,13 @@ class AppStore {
   void setSyncDate(DateTime date) {
     syncDate.value = date;
     save();
+  }
+
+  void deleteApp() {
+    _configurationService.deleteAll();
+  }
+
+  ThemeMode _getThemeModeByName(String name) {
+    return ThemeMode.values.firstWhere((mode) => mode.name == name);
   }
 }
