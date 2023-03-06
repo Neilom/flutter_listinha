@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:listinha/src/shared/stores/app_store.dart';
+import 'package:rx_notifier/rx_notifier.dart';
 
 class ConfigurationPage extends StatefulWidget {
   const ConfigurationPage({super.key});
@@ -10,11 +11,20 @@ class ConfigurationPage extends StatefulWidget {
 }
 
 class _ConfigurationPageState extends State<ConfigurationPage> {
+  final appStore = Modular.get<AppStore>();
+
+  void _changeThemeMode(ThemeMode? mode) {
+    if (mode != null) {
+      appStore.themeMode = mode;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final appStore = context.watch<AppStore>(
-      (store) => store.themeMode,
+    context.select(
+      () => appStore.themeMode,
     );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('LISTINHA'),
@@ -40,21 +50,21 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
             SizedBox(height: 20),
             RadioListTile(
               value: ThemeMode.system,
-              groupValue: appStore.themeMode.value,
+              groupValue: appStore.themeMode,
               title: Text('Sistema'),
-              onChanged: appStore.changeThemeMode,
+              onChanged: _changeThemeMode,
             ),
             RadioListTile(
               value: ThemeMode.light,
-              groupValue: appStore.themeMode.value,
+              groupValue: appStore.themeMode,
               title: Text('Claro'),
-              onChanged: appStore.changeThemeMode,
+              onChanged: _changeThemeMode,
             ),
             RadioListTile(
               value: ThemeMode.dark,
-              groupValue: appStore.themeMode.value,
+              groupValue: appStore.themeMode,
               title: Text('Escuro'),
-              onChanged: appStore.changeThemeMode,
+              onChanged: _changeThemeMode,
             ),
             SizedBox(height: 20),
             Text(
@@ -63,7 +73,7 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
             ),
             SizedBox(height: 20),
             OutlinedButton(
-              onPressed: appStore.deleteApp,
+              onPressed: () {},
               child: Text('Apagar cache e reiniciar o app'),
             )
           ],

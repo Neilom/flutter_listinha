@@ -17,7 +17,10 @@ void main() {
       Task(Uuid.v4(), ''),
     ];
 
-    final progress = TaskCard(board: board).getProgress(tasks);
+    final progress = TaskCard(
+      board: board,
+      height: 120,
+    ).getProgress(tasks);
 
     expect(progress, 0.5);
   });
